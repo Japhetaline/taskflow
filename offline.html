@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Offline — TaskFlow</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" type="image/png" sizes="64x64" href="assets/icons/favicon-64.png" />
+  <meta name="theme-color" content="#FAF6EF" />
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #faf6ef;
+      --ink: #1a1714;
+      --muted: #5e564d;
+      --accent: #d97706;
+      --line: #e6dcc9;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #13110f;
+        --ink: #f2ebe0;
+        --muted: #9b9182;
+        --accent: #f59e0b;
+        --line: #2a2520;
+      }
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      display: grid;
+      place-items: center;
+      padding: 2rem;
+      text-align: center;
+    }
+    .wrap { max-width: 32rem; }
+    .mark {
+      width: 56px; height: 56px; border-radius: 14px;
+      background: var(--ink); display: grid; place-items: center;
+      margin: 0 auto 1.5rem;
+    }
+    .mark::before {
+      content: ""; width: 18px; height: 18px; border-radius: 50%;
+      background: var(--accent); display: block;
+    }
+    h1 {
+      font-family: "Fraunces", "Iowan Old Style", Georgia, serif;
+      font-weight: 400;
+      font-size: clamp(2rem, 5vw, 2.75rem);
+      letter-spacing: -0.02em;
+      margin: 0 0 0.5rem;
+    }
+    p { color: var(--muted); margin: 0 0 2rem; line-height: 1.6; }
+    button {
+      background: var(--ink); color: var(--bg); border: none;
+      padding: 0.875rem 1.5rem; border-radius: 8px;
+      font-weight: 500; font-size: 0.95rem; cursor: pointer;
+      transition: transform 120ms ease, opacity 120ms ease;
+    }
+    button:hover { transform: translateY(-1px); }
+    button:active { transform: translateY(0); opacity: 0.9; }
+    .hr {
+      height: 1px; background: var(--line); margin: 2rem auto; width: 4rem;
+    }
+    small { color: var(--muted); font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="mark" aria-hidden="true"></div>
+    <h1>You're offline</h1>
+    <p>No network right now — but your tasks are safe on this device. Reconnect to sync, or head back to keep working offline.</p>
+    <button type="button" onclick="location.href='/'">Back to TaskFlow</button>
+    <div class="hr"></div>
+    <small>TaskFlow works offline by design.</small>
+  </div>
+</body>
+</html>
