@@ -10,6 +10,7 @@
 
 import { h } from "../utils/domUtils.js";
 import { toast } from "../utils/toast.js";
+import { init as initIOSBanner } from "./iosInstallBanner.js";
 
 let deferredPrompt = null;
 let bannerEl = null;
@@ -23,6 +24,9 @@ export function init() {
       showBanner();
     }
   });
+
+  // iOS never fires beforeinstallprompt — show the manual guidance banner instead
+  initIOSBanner();
 
   window.addEventListener("appinstalled", () => {
     deferredPrompt = null;

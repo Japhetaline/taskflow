@@ -535,6 +535,99 @@
 }
 .install-banner .install-text strong { display: block; font-size: var(--fs-md); }
 
+/* ---------- iOS INSTALL BANNER ---------- */
+.ios-install-banner {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(max(var(--space-4), env(safe-area-inset-bottom)) + var(--space-2));
+  z-index: var(--z-fab);
+  background: var(--bg-elev);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-4);
+  width: calc(100% - 2 * var(--space-4));
+  max-width: 22rem;
+  animation: slide-up var(--t-slow) var(--ease-out);
+}
+.ios-install-banner.is-out {
+  animation: ios-banner-out var(--t-base) var(--ease-out) forwards;
+}
+/* Downward-pointing caret — visually points at the iOS bottom toolbar share button */
+.ios-install-banner::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid var(--bg-elev);
+  pointer-events: none;
+}
+.ios-install-banner::before {
+  content: "";
+  position: absolute;
+  bottom: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 9px solid var(--line);
+  pointer-events: none;
+}
+.ios-install-body {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.ios-install-icon {
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius-md);
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  display: grid;
+  place-items: center;
+}
+.ios-install-text {
+  flex: 1;
+  min-width: 0;
+  padding-right: var(--space-5);
+}
+.ios-install-text strong {
+  display: block;
+  font-size: var(--fs-md);
+  font-weight: 600;
+  margin-bottom: var(--space-1);
+}
+.ios-install-text span {
+  font-size: var(--fs-sm);
+  color: var(--ink-soft);
+  line-height: var(--lh-snug);
+}
+.ios-install-text em {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--ink);
+}
+.ios-install-close {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  color: var(--muted);
+  display: grid;
+  place-items: center;
+  transition: background-color var(--t-fast), color var(--t-fast);
+}
+.ios-install-close:hover { background: var(--bg-sunken); color: var(--ink); }
+
 /* ---------- ANIMATIONS ---------- */
 @keyframes task-enter {
   from { opacity: 0; transform: translateY(6px); }
@@ -556,4 +649,7 @@
 }
 @keyframes toast-out {
   to { opacity: 0; transform: translateY(-10px) scale(0.96); }
+}
+@keyframes ios-banner-out {
+  to { opacity: 0; transform: translateX(-50%) translateY(12px); }
 }

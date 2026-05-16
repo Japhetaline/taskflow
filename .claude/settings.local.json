@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node --check \"c:\\\\Users\\\\japhe\\\\Documents\\\\taskflow\\\\src\\\\services\\\\iosInstallBanner.js\")",
+      "Bash(node --check \"c:\\\\Users\\\\japhe\\\\Documents\\\\taskflow\\\\src\\\\services\\\\installService.js\")"
+    ]
+  }
+}
