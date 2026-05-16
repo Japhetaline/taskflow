@@ -551,6 +551,9 @@
   width: calc(100% - 2 * var(--space-4));
   max-width: 22rem;
   animation: slide-up var(--t-slow) var(--ease-out);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
 }
 .ios-install-banner.is-out {
   animation: ios-banner-out var(--t-base) var(--ease-out) forwards;
@@ -585,8 +588,8 @@
 }
 .ios-install-icon {
   flex-shrink: 0;
-  width: 46px;
-  height: 46px;
+  width: 44px;
+  height: 44px;
   border-radius: var(--radius-md);
   background: var(--accent-soft);
   color: var(--accent-ink);
@@ -596,37 +599,74 @@
 .ios-install-text {
   flex: 1;
   min-width: 0;
-  padding-right: var(--space-5);
 }
 .ios-install-text strong {
   display: block;
   font-size: var(--fs-md);
   font-weight: 600;
-  margin-bottom: var(--space-1);
+  margin-bottom: 2px;
 }
 .ios-install-text span {
   font-size: var(--fs-sm);
   color: var(--ink-soft);
   line-height: var(--lh-snug);
 }
-.ios-install-text em {
-  font-style: normal;
-  font-weight: 500;
-  color: var(--ink);
+.ios-install-actions {
+  display: flex;
+  gap: var(--space-2);
+  justify-content: flex-end;
 }
-.ios-install-close {
-  position: absolute;
-  top: var(--space-2);
-  right: var(--space-2);
+.ios-install-actions .btn {
+  padding: var(--space-2) var(--space-4);
+}
+
+/* ---------- iOS HOW-TO MODAL ---------- */
+.ios-howto { width: min(26rem, 100%); }
+.ios-howto-lead {
+  font-size: var(--fs-sm);
+  color: var(--ink-soft);
+  line-height: var(--lh-normal);
+  margin-bottom: var(--space-5);
+}
+.ios-howto-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.ios-howto-step {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+.ios-howto-num {
+  flex-shrink: 0;
   width: 28px;
   height: 28px;
-  border-radius: var(--radius-sm);
-  color: var(--muted);
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
   display: grid;
   place-items: center;
-  transition: background-color var(--t-fast), color var(--t-fast);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
-.ios-install-close:hover { background: var(--bg-sunken); color: var(--ink); }
+.ios-howto-step-text { flex: 1; min-width: 0; }
+.ios-howto-step-lead {
+  font-size: var(--fs-md);
+  color: var(--ink);
+  line-height: var(--lh-snug);
+  margin-bottom: 2px;
+}
+.ios-howto-step-lead svg { color: var(--accent); }
+.ios-howto-step-sub {
+  font-size: var(--fs-xs);
+  color: var(--muted);
+  line-height: var(--lh-snug);
+}
 
 /* ---------- ANIMATIONS ---------- */
 @keyframes task-enter {
