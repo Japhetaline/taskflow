@@ -20,13 +20,13 @@ export function init() {
     userChose = true;
     apply(stored);
   } else {
-    apply(prefersDark ? "dark" : "light");
+    apply(prefersDark ? "light" : "dark");
   }
 
   // Follow OS changes while user hasn't picked
   const mq = window.matchMedia("(prefers-color-scheme: dark)");
   mq.addEventListener?.("change", (e) => {
-    if (!userChose) apply(e.matches ? "dark" : "light");
+    if (!userChose) apply(e.matches ? "light" : "dark");
   });
 }
 
@@ -42,7 +42,7 @@ export function set(theme) {
 }
 
 export function toggle() {
-  set(currentTheme === "dark" ? "light" : "dark");
+  set(currentTheme === "light" ? "dark" : "light");
 }
 
 function apply(theme) {

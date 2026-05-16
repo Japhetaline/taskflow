@@ -14,11 +14,14 @@ import * as themeService from "./services/themeService.js";
 import * as syncService from "./services/syncService.js";
 import * as installService from "./services/installService.js";
 import * as notificationService from "./services/notificationService.js";
+import * as statsService from "./services/statsService.js";
+import * as briefingService from "./services/briefingService.js";
 
 import { mountHeader } from "./components/Header.js";
 import { mountSearchBar } from "./components/SearchBar.js";
 import { mountFilterBar } from "./components/FilterBar.js";
 import { mountTaskList } from "./components/TaskList.js";
+import { mountStatsBar } from "./components/StatsBar.js";
 import { openTaskForm, prefetchTaskForm } from "./components/taskFormHost.js";
 
 import { bus, EVENTS } from "./utils/eventBus.js";
@@ -34,8 +37,12 @@ async function boot() {
   // 2) Load tasks from IndexedDB
   await taskService.init();
 
+  // 2b) Stats (depends on tasks being loaded so totalCompleted seeds correctly)
+  await statsService.init();
+
   // 3) Mount UI (TaskForm is lazy — see taskFormHost)
   mountHeader(document.getElementById("app-header"));
+  mountStatsBar(document.getElementById("stats-section"));
   mountSearchBar(document.getElementById("search-section"));
   mountFilterBar(document.getElementById("filter-section"));
   mountTaskList(document.getElementById("list-section"));
@@ -61,9 +68,10 @@ async function boot() {
     openTaskForm();
   }
 
-  // 7) Sync + install + notifications
+  // 7) Sync + install + notifications + morning briefing
   syncService.init();
   installService.init();
+  briefingService.init();
   initOnlineBanner();
   initNotificationPermissionLazyAsk();
 

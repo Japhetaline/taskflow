@@ -3,7 +3,7 @@
  */
 import { h, icon } from "../utils/domUtils.js";
 import * as taskService from "../services/taskService.js";
-import { CATEGORIES } from "../services/taskService.js";
+import { CATEGORIES, RECURRENCES } from "../services/taskService.js";
 import { formatTime, isOverdue } from "../utils/dateUtils.js";
 import { openTaskForm } from "./taskFormHost.js";
 import { toast } from "../utils/toast.js";
@@ -64,6 +64,12 @@ export function renderTaskItem(task) {
   }
   if (task.priority === "high") {
     meta.push(h("span", { class: "tag tag-priority-high" }, "High"));
+  }
+  if (task.recurrence && RECURRENCES[task.recurrence]) {
+    meta.push(h("span", {
+      class: "tag tag-recurring",
+      title: `Repeats ${RECURRENCES[task.recurrence].label.toLowerCase()}`,
+    }, [icon("recurring", 12), RECURRENCES[task.recurrence].label]));
   }
 
   const body = h("div", { class: "task-body" }, [

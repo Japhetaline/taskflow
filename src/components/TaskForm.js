@@ -8,7 +8,7 @@
 import { h, icon } from "../utils/domUtils.js";
 import { bus, EVENTS } from "../utils/eventBus.js";
 import * as taskService from "../services/taskService.js";
-import { CATEGORIES, PRIORITIES } from "../services/taskService.js";
+import { CATEGORIES, PRIORITIES, RECURRENCES } from "../services/taskService.js";
 import { todayISO } from "../utils/dateUtils.js";
 import { toast } from "../utils/toast.js";
 import * as notificationService from "../services/notificationService.js";
@@ -66,6 +66,7 @@ function renderModal(task) {
     time: `${uid}-time`,
     cat: `${uid}-cat`,
     pri: `${uid}-pri`,
+    rep: `${uid}-rep`,
   };
 
   const titleInput = h("input", {
@@ -119,6 +120,17 @@ function renderModal(task) {
     )
   );
 
+  const recurrenceSelect = h(
+    "select",
+    { id: ID.rep, name: "recurrence" },
+    [
+      h("option", { value: "", selected: !task?.recurrence }, "None"),
+      ...Object.values(RECURRENCES).map((r) =>
+        h("option", { value: r.id, selected: task?.recurrence === r.id }, r.label)
+      ),
+    ]
+  );
+
   const overlay = h("div", {
     class: "modal-overlay",
     onclick: (e) => {
@@ -135,6 +147,7 @@ function renderModal(task) {
       dueTime: timeInput.value,
       category: categorySelect.value,
       priority: prioritySelect.value,
+      recurrence: recurrenceSelect.value || null,
     };
     if (!payload.title.trim()) {
       titleInput.focus();
@@ -186,6 +199,10 @@ function renderModal(task) {
           h("label", { for: ID.pri }, "Priority"),
           prioritySelect,
         ]),
+      ]),
+      h("div", { class: "field" }, [
+        h("label", { for: ID.rep }, "Repeat"),
+        recurrenceSelect,
       ]),
       !isEdit
         ? h("div", { class: "field" }, [

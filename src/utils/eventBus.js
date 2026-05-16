@@ -11,6 +11,7 @@
 
 export const EVENTS = Object.freeze({
   TASKS_CHANGED: "tasks:changed",
+  TASK_COMPLETED: "tasks:completed",
   FILTER_CHANGED: "filter:changed",
   SEARCH_CHANGED: "search:changed",
   THEME_CHANGED: "theme:changed",

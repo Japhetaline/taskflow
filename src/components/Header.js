@@ -4,6 +4,7 @@
 import { h, icon, mount } from "../utils/domUtils.js";
 import * as themeService from "../services/themeService.js";
 import { bus, EVENTS } from "../utils/eventBus.js";
+import { openSettings } from "./SettingsDrawer.js";
 
 export function mountHeader(container) {
   const themeBtn = h("button", {
@@ -21,6 +22,14 @@ export function mountHeader(container) {
   renderThemeIcon();
   bus.on(EVENTS.THEME_CHANGED, renderThemeIcon);
 
+  const settingsBtn = h("button", {
+    class: "icon-btn",
+    type: "button",
+    "aria-label": "Settings",
+    title: "Settings",
+    onclick: () => openSettings(),
+  }, [icon("settings", 18)]);
+
   const inner = h("div", { class: "header-inner" }, [
     h("div", { class: "brand", "aria-label": "TaskFlow" }, [
       h("span", { class: "brand-mark", "aria-hidden": "true" }),
@@ -29,7 +38,7 @@ export function mountHeader(container) {
         h("em", {}, "Flow"),
       ]),
     ]),
-    h("div", { class: "header-actions" }, [themeBtn]),
+    h("div", { class: "header-actions" }, [themeBtn, settingsBtn]),
   ]);
 
   mount(container, inner);
