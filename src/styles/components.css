@@ -379,6 +379,12 @@
 .modal-body {
   padding: var(--space-5) var(--space-6);
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  /* flex: 1 + min-height: 0 lets the body shrink below content size so the
+     footer stays pinned and the body scrolls — critical on short screens
+     where otherwise "Cancel" / "Add task" get pushed off the viewport. */
+  flex: 1 1 auto;
+  min-height: 0;
 }
 .modal-footer {
   padding: var(--space-4) var(--space-6) var(--space-5);
@@ -386,6 +392,7 @@
   display: flex;
   gap: var(--space-2);
   justify-content: flex-end;
+  flex-shrink: 0;
 }
 
 .field { margin-bottom: var(--space-4); }

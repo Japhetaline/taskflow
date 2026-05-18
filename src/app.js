@@ -16,6 +16,7 @@ import * as installService from "./services/installService.js";
 import * as notificationService from "./services/notificationService.js";
 import * as statsService from "./services/statsService.js";
 import * as briefingService from "./services/briefingService.js";
+import * as overdueReminderService from "./services/overdueReminderService.js";
 
 import { mountHeader } from "./components/Header.js";
 import { mountSearchBar } from "./components/SearchBar.js";
@@ -72,8 +73,14 @@ async function boot() {
   syncService.init();
   installService.init();
   briefingService.init();
+  overdueReminderService.init();
   initOnlineBanner();
   initNotificationPermissionLazyAsk();
+
+  // 7b) Re-arm reminder timers for every loaded task. setTimeout-based
+  //     reminders don't survive a reload / PWA cold-start, so without this
+  //     the only tasks that get notified are ones added in *this* session.
+  rescheduleAllReminders();
 
   // 8) Service worker
   registerServiceWorker();
@@ -118,13 +125,26 @@ function initNotificationPermissionLazyAsk() {
     if (notificationService.getPermission() === "default") {
       notificationService.requestPermission().then((perm) => {
         if (perm === "granted") {
-          // Schedule a reminder for the just-added task
-          notificationService.scheduleReminder(added);
+          // Schedule reminders for every loaded task, not just the new one —
+          // older tasks were skipped while permission was "default".
+          rescheduleAllReminders();
+          // Briefing was inert without permission; re-arm now that we have it.
+          briefingService.reschedule();
         }
       });
       off(); // ask only once
     }
   });
+}
+
+/** Re-arm setTimeout reminders for every incomplete task with a due date. */
+function rescheduleAllReminders() {
+  if (notificationService.getPermission() !== "granted") return;
+  for (const task of taskService.getAll()) {
+    if (!task.completed && task.dueDate) {
+      notificationService.scheduleReminder(task);
+    }
+  }
 }
 
 /* ------------------------------------------------------------ */
